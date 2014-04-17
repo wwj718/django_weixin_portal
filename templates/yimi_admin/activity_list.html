@@ -1,0 +1,66 @@
+{% extends "yimi_admin/base.html" %}
+{% block right_div %}
+<link href="/static/watch/css/change.css" rel="stylesheet" type="text/css" />
+
+<div id="content" class="span10">
+    <div class="wrapper">
+        <div class="widget">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <h6>管理</h6>
+                    
+                </div>
+            </div>
+
+            <div class="widget">
+                              
+                <ul class="options-bar">
+                    <li>
+                        <div class="  align-left">
+                        <div class="bar-button"><button type="button" class="btn" onclick="location.href='{% url 'yimi_admin:activity_add' %}'" >创建活动</button>链接：http://{{appitem.domain}}{% url 'nanjing:activity_list' appitem.slug %}</div>
+                        </div>  
+                    </li>
+                </ul>
+
+            </div>
+            <!-- /options bar -->                            
+            <div class="table-overflow">
+                <table class="table table-striped table-bordered table-checks media-table">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" name="checkRow" class="styled all-select" style="width:16px"/></th>
+                            <th>活动名称</th>
+                            <th>活动时间</th>
+                            <th>活动人数</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for activity in activities %}
+                        <tr>
+                            <th><input type="checkbox" name="artwork_ids[]" class="styled" style="width:16px"  /></th>
+
+                           <td><a href="{% url 'yimi_admin:activity_account_list' activity.id %}">{{activity.title}}</a></td>
+                           <td>{{activity.a_time}}</td>
+                           <td>{{activity.count}}</td>
+                           <td>{% if activity.status %}发布{% else %}下线{% endif %}</td>
+                           <td>
+                            <input type="button" value="删除" onclick="location.href='{% url 'yimi_admin:activity_delete' activity.id %}'" />
+                            <input type="button" value="编辑" onclick="location.href='{% url 'yimi_admin:activity_add' %}?aid={{activity.id}}'"/>
+                            <input type="button" value="{% if activity.status %}下线{% else %}发布{% endif %}" onclick="location.href='{% url 'yimi_admin:activity_status' activity.id %}'"/>
+                           </td>
+                        </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="/static/myadmin/css/list.css" />
+
+
+{% endblock %}

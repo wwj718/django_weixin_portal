@@ -1,0 +1,92 @@
+/*全局定义*/
+
+body{font-family:"微软雅黑", Verdana, arial;margin:0 auto;padding:0; color:#000;  background:#eee;}
+div,form,img,ul,ol,li,dl,dt,dd{margin:0px;padding:0px;border:0px}
+h1,h2,h3,h4,h5,h6{margin:0px;padding:0px;}
+table,td,tr,th{font-family:"微软雅黑", Verdana, arial;margin:0px;padding:0px;color:#000; }
+ul,dl,ol,form{margin:0px;border:0px; padding:0px}
+ul li,ol li{list-style-type:none}
+dl dt,dl dd{margin:0px;padding:0px;}
+p{margin:0px;padding:0px;line-height:18px}
+img{border:0px;}
+
+/* 字体属性 [定义规则，小写f加属性名称] */
+.fb{font-weight:bold} .fI{font-style: italic}
+
+/* 字体大小*/
+.f12{ font-size:12px} .f14{ font-size:14px}
+
+/*清除浮动*/
+.c{ clear:both; display:block;}
+.clx{*zoom:1}
+.clx:after{clear:both;content:".";display:block;height:0;visibility:hidden;color:#131313}
+.left{ float:left;}
+.right{ float:right;}
+
+
+a:link {text-decoration:none;}
+a:visited {text-decoration:none;}
+
+.pb20{ padding-bottom:20px;}
+
+.wrap{ padding:20px;}
+.list_box{ padding:20px; background:#fff; border:1px solid #dbdbdd; margin-bottom:10px;}
+.list_box dt{ font-size:30px; color:#333; margin-bottom:20px;}
+.list_box dd{ font-size:20px; color:#999;}
+
+.list_box dd p{ text-indent:40px; line-height:25px; margin-bottom:10px;}
+
+.tools{ height:90px; width:100%; background:#f90; position:absolute; bottom:0px; left:0px;}
+.tools a{ width:50%; display:block; height:90px; text-align: center; font-size:30px; color:#fff; line-height:90px; text-decoration:none;}
+.tools a.click{ background:#c90;}
+
+.formWrap{ padding:30px; }
+.formList li{ margin-bottom:10px; }
+
+.formList li.title{ font-size:3em; margin-bottom:20px;}
+
+.inputTxt{ width:98%;  height:50px; background:#fff; border:1px solid #dbdbdd;  padding:15px; color:#ccc; border-radius:5px;font-size:2em;margin-bottom:5px; }
+
+.inputBut{ width:100%; border:0px; border-radius:5px; background:#f90; text-align:center; color:#fff; font-size:3em; padding:15px;}
+
+.cgBox{ background:#F90;   border-radius:5px; padding:100px 0px; margin-top:30%; text-align:center; font-size:36px; color:#fff;}
+
+
+.detailedCon{ background:#f8f7f5; padding:20px;}
+.detailedCon h1{font-size:1.4em; color:#000; margin:5px 0 15px 0;}
+
+.detailedCon div{ font-size:1em; color:#8c8c8c; margin-bottom:15px;}
+.detailedCon div span{ margin-right:20px;}
+.detailedCon div span a{ color:#69F; text-decoration:none;}
+
+.detailedCon p{ font-size:1em; color:#404040; line-height:30px; }
+img{width: 100% !important; max-width: auto !important;}
+.listimg{width:205px; height:180px; float:left; margin-right:30px;}
+
+
+.listimg img{height:180px;}
+
+.articles_list_title{
+color:black;
+font-size:50px;
+}
+
+.articles_list_dscrip{
+color:grey;
+font-size:120%;
+line-height:42px;
+}
+
+.hidden{
+visibility:hidden;
+}
+
+.visible{
+visibility:visible;
+}
+
+.sh_error{
+color:red;
+margin-left:10px;
+visibility:hidden;
+}

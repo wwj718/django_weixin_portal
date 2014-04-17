@@ -1,0 +1,23 @@
+
+/* ========================================================
+*
+* Pannonia - responsive admin template
+*
+* ========================================================
+*
+* File: ie8.css;
+* Description: IE8 specific styles
+* Version: 1.0
+*
+* ======================================================== */
+
+
+.btn { padding: 7px 12px 8px 12px; }
+div.selector span { padding: 7px 31px 8px 0px; }
+.select2-container .select2-choice { padding: 7px 0 8px 8px; }
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+padding: 8px 7px 8px 7px;
+line-height: 13px;}
+select { padding: 5px 2px; line-height: 1; height: auto; }
+.error-page .reason { color: #777; }
+.btn { line-height: 12px; padding: 8px 12px 8px 12px; }

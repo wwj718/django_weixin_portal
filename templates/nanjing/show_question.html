@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+	<title>客服</title>
+	<style>
+	*{
+		font-family:'Microsoft Yahei';
+		background-color:#eee;
+	}
+	textarea{
+		width:100%;
+		height:90%;
+		border:1px solid #D6D6D6;
+		background-color: white;
+	}
+	h1{
+		font-size:3em;
+		font-weight: normal;
+	}
+
+	h2{
+		font-size:1em;
+		background-color: white;
+		font-weight: normal;
+
+	}
+
+	button{
+		float:right;
+		width:100px;
+		height:35px;
+		background-color:#f90;
+		border:none;
+		color:white;
+		border-radius: 3px;
+	}
+
+	.yhd{
+		border:1px solid #dbdbdd;
+		margin-top:10px;
+		margin-bottom:20px;
+		background-color: white;
+		padding:5px;
+	}
+
+	.yhd_item{
+		min-height:30px;
+		width:100%;
+		border:1px solid #D6D6D6;
+		margin-bottom: 5px;
+	}
+</style>
+</head>
+<body>
+	<h1>在线咨询</h1>
+	<hr>
+	<section class="yhd">
+		<h2>已回答问题</h2>
+		<div class="yhd_item">
+            {% for kefu in kefus %}
+			<h3>{{kefu.question}} 提问时间:{{kefu.create_time|date:'Y-m-d H:i'}}</h3>
+            
+			<p>{{kefu.answer|default:"未回答"}}  {% if kefu.answer %}{{kefu.answer_time|date:'Y-m-d H:i'}}{% endif %}</p>
+            {% endfor %}
+		</div>
+		<div class="yhd_item"></div>
+	</section>
+    <form action='{% url 'nanjing:show_question' appitem.slug %}' method='post'>{% csrf_token %}
+	<textarea name="question" id="question" cols="30" rows="10" placeholder="请在此输入问题"></textarea>
+    <input type="hidden" name="openid" value="{{openid}}" />
+    <input type='submit' value="提交"/>
+    </form>
+</body>
+</html>

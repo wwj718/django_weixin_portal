@@ -1,0 +1,120 @@
+{% extends "yimi_admin/base.html" %}
+{% block right_div %}
+<link href="/static/watch/css/change.css" rel="stylesheet" type="text/css" />
+<script src="/static/myadmin/js/lib.js"></script>
+<script src="/static/myadmin/js/layer.min.js"></script>
+
+<div id="content" class="span10">
+    <div class="wrapper">
+        <div class="widget">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <h6>在线咨询管理</h6>
+                    
+                </div>
+            </div>
+
+            <div class="widget">
+                              
+                <ul class="options-bar">
+                    <li>
+                        <div class="align-left">
+                        链接:<input  onclick="this.select()"  type="text" value="{{url}}"> (点击全选 CTRL+C复制）
+                        </div>  
+                    </li>
+                </ul>
+
+            </div>
+            <!-- /options bar -->                            
+            <div class="table-overflow">
+                <table class="table table-striped table-bordered table-checks media-table">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" name="checkRow" class="styled all-select" style="width:16px"/></th>
+                            <th>用户</th>
+                            <th>问题</th>
+                            <th>时间</th>
+                            <th>状态</th>
+                            <th class="actions-column">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for kefu in kefus %}
+                        <tr>
+                            <th><input type="checkbox" name="artwork_ids[]" class="styled" style="width:16px"  /></th>
+
+                           <td>{{kefu.appuser.nickname}}</td>
+                           <td>{{kefu.question}}</td>
+                           <td>{{kefu.create_time|date:'Y-n-d H:i'}}</td>
+                           <td>{% if kefu.answer %}已回答{% else %}未回答{% endif %}</td>
+                           <td>
+                            <input type="button" value="删除"  onclick="location.href='{% url 'yimi_admin:kefu_delete' %}?gid={{kefu.id}}'" />
+                            <input type="button" value="回答" class="sh_answer" onclick="show(0,this)" qit-value="{{kefu.id}}" create-time="{{kefu.create_time|date:'Y-n-d H:i'}}" question-value="{{kefu.question}}" answer-value="{{kefu.answer|default:''}}"  id="editor-group-name{{category.id}}"/>
+                           </td>
+                        </tr>
+
+<script type="text/javascript">
+
+</script>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="/static/myadmin/css/list.css" />
+
+      <div id="popupContact" style="display: none;
+				position: fixed;
+				_position: absolute; /* hack for internet explorer 6*/
+				top:250px;
+				left:620px;
+				height: 240px;
+				width: 420px;
+				background: #FFFFFF;
+				border: 2px solid #cecece;
+				z-index: 2;
+				padding: 30px;
+				font-size: 13px;">
+
+<b>问题标题：</b><img onclick="show(1,this)" src="/static/myadmin/img/close.png" alt="关闭" style="float:right;"><p><span class="sh_qtitle">这里是问题的标题</span><span class="sh_time" style="float:right;margin-right:40px;">时间</span></p> 
+<form method="post" action="{% url 'yimi_admin:answer_question' %}">
+{% csrf_token  %}
+<textarea rows="10" cols="80" name="answer" placeholder="请在这里输入回答" class="sh_answer"></textarea>
+<input type="hidden" class = "hidden" value="" name="qid" />
+<input type="submit" style="margin-top:10px;margin-bottom:30px;"></form>
+</div>
+
+<script>
+function show(){
+	$(".qstf").css("display","block");
+	
+}
+
+		  function show(a,b){
+			if(a==0){
+				document.getElementById('popupContact').style.display="block";
+                                                               var value = b.getAttribute("qit-value");
+				var atime = b.getAttribute("create-time");
+				var qtitle = b.getAttribute("question-value");
+				var answer = b.getAttribute("answer-value");
+				$(".sh_time").html(atime);
+				$(".sh_qtitle").html(qtitle);
+				if(answer!=""){
+$(".sh_answer").html(answer);
+
+}
+				$(".hidden").attr("value",value);
+				
+			}else if(a ==1){
+				document.getElementById('popupContact').style.display="none";
+			}
+		  }
+
+
+
+      </script>
+
+{% endblock %}

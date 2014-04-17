@@ -1,0 +1,70 @@
+/*全局定义*/
+
+body{font-family:"微软雅黑", Verdana, arial;margin:0 auto;padding:0; color:#000;  background:#eee;}
+div,form,img,ul,ol,li,dl,dt,dd{margin:0px;padding:0px;border:0px}
+h1,h2,h3,h4,h5,h6{margin:0px;padding:0px;}
+table,td,tr,th{font-family:"微软雅黑", Verdana, arial;margin:0px;padding:0px;color:#000; }
+ul,dl,ol,form{margin:0px;border:0px; padding:0px}
+ul li,ol li{list-style-type:none}
+dl dt,dl dd{margin:0px;padding:0px;}
+p{margin:0px;padding:0px;line-height:18px}
+img{border:0px;}
+
+/* 字体属性 [定义规则，小写f加属性名称] */
+.fb{font-weight:bold} .fI{font-style: italic}
+
+/* 字体大小*/
+.f12{ font-size:12px} .f14{ font-size:14px}
+
+/*清除浮动*/
+.c{ clear:both; display:block;}
+
+.left{ float:left;}
+.right{ float:right;}
+
+/* Link */
+a:link {color:#454545; text-decoration:none;}
+a:visited {color:#454545;text-decoration:none;}
+a:hover {color:#454545; text-decoration:underline;}
+a:active {color:#454545;}
+
+.pb20{ padding-bottom:20px;}
+
+.wrap{ padding:0px;margin:0 auto;}
+.list_box{ padding:10px; background:#fff; border:1px solid #dbdbdd; margin-bottom:10px;}
+.list_box dt{ font-size:30px; color:#333; margin-bottom:5px;}
+.list_box dd{ font-size:20px; color:#999;}
+.list_box dd p{color:#000;}
+.list_box dd p span{color:#000;}
+
+.list_box dd p{ text-indent:40px; line-height:25px; margin-bottom:10px;}
+
+.tools{ height:90px; width:100%; background:#f90; position:absolute; bottom:0px; left:0px;}
+.tools a{ width:50%; display:block; height:90px; text-align: center; font-size:30px; color:#fff; line-height:90px; text-decoration:none;}
+.tools a.click{ background:#c90;}
+
+.formWrap{ padding:30px; }
+.formList li{ margin-bottom:10px; }
+
+.formList li.title{ font-size:30px; margin-bottom:20px;}
+
+.inputTxt{ width:90%;  height:50px; background:#fff; border:1px solid #dbdbdd; font-size:30px; padding:15px; color:#ccc; border-radius:5px; }
+
+.inputBut{ width:96%;  border:0px; border-radius:5px; background:#f90; text-align:center; color:#fff; font-size:30px; padding:15px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

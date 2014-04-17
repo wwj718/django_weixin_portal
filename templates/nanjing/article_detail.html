@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="cn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="initial-scale=1.0,user-scalable=no"/>
+<title>{{appitem.name}}</title>
+<link href="/static/nanjing/css/base.css" rel="stylesheet" />
+</head>
+
+<body class="detailedCon">
+<!--标题-->
+<h1 class="contitle">{{article.title}}</h1>
+
+<!--时间 作者 来源-->
+<div><span class="article_detail_date">{{article.create_time|date:'Y-n-d'}}</span>&nbsp;<span class="article_detail_author"><a href="#">{{article.author}}</a></span></div>
+
+<!--内容-->  
+<section>{{article.content|safe}} </section>
+<p><br /></p>
+{% if article.url %}
+<p><a href="{{article.url}}">阅读原文>></a></p>
+{% endif %}
+</body>
+</html>

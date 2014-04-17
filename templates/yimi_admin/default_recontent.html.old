@@ -1,0 +1,79 @@
+{% extends "yimi_admin/base.html" %}
+{% block right_div %}
+<div>
+    <h3>{{message.get_tag_display}}</h3>
+    {% if message.tag == 'keyword_recontent' %}
+    <div><input type="text" name="keyword" value="{{message.keyword}}" id="keyword-input" /></div>
+    {% endif %}
+    <div id='text-show'>文本</div><div id='img-text-show'>图文</div>
+    
+    <div id='text-div' {% if message.retype != 'text' %}style="display:none"{% endif %}> 
+    <form method="post" action="{% url 'yimi_admin:text_update' %}" id="text-form">{% csrf_token %}
+        <textarea name='content'>{{message.get_resource.content|default:''}}</textarea>
+        <input type="hidden" name='slug' value={{message.id}} />
+        <input type="hidden" name='keyword' id="keyword-value" />
+        <input type='submit' name='提交' />
+    </form>
+    </div>
+    {% if message.retype == 'news' %}
+    <div id="news-div">
+        {% for article in  message.get_resource.articles.all %}
+        <ul>
+        <li><a href="{% url 'yimi_admin:article_detail' article.id  %}">{{article.title}}</a></li>
+        <li>{{article.get_description}}</li>
+        <li><img src="{{article.get_image_url}}" width=100 height=100 /></li>
+        </ul>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div id='news-list-div' style="display:none" >
+    {% for n in news %}
+        <div>
+            {% for article in n.articles.all %}
+            <ul>
+                <li><a href="{% url 'yimi_admin:article_detail' article.id  %}">{{article.title}}</a></li>
+                <li>{{article.get_description}}</li>
+                <li><img src="{{article.get_image_url}}" width=100 height=100 /></li>
+            </ul>
+            {% endfor %}
+            <div><a href="{% url 'yimi_admin:news_update' %}?n={{n.id}}&message={{message.id}}" id="change-news" >选择<a></div>
+        </div>
+        <hr />
+    {% endfor %}
+    </div>
+
+</div>
+<script type="text/javascript">
+$("#img-text-show").click(
+    function(){
+    $("#text-div").hide();
+    $("#news-list-div").show();
+    $("#news-div").show();
+}
+)
+$("#text-show").click(
+    function(){
+    $("#text-div").show();
+    $("#news-list-div").hide();
+    $("#news-div").hide();
+})
+
+$("#text-form").submit(
+    function(){
+        $("#keyword-value").val($("#keyword-input").val());
+    }   
+)
+//
+//$("#change-news").click(
+//    function(){
+//        alert("ok");
+//        var keyword = $("#keyword-input").val();
+//        if(keyword !=null && keyword != ''){
+//            location.href = $(this).attr("href")+keyword;
+//        }
+//    }
+//)
+//
+</script>
+
+{% endblock %}

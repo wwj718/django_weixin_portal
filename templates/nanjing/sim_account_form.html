@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="user-scalable=no" />
+<title>预约开户</title>
+<link href="/static/nanjing/css/base.css" rel="stylesheet" type="text/css" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi" />
+<script src="http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js"></script>
+</head>
+
+<body >
+	<div class="formWrap">
+	    <form action="{% url 'nanjing:sim_account' appitem.slug %}" method="post">{%csrf_token%}
+    	<ul class="formList">
+        	<li class="title">预约开户：</li>
+            <li><input name="name" type="text"  class="inputTxt" placeholder="姓名"/></li>
+            <li><input name="cid" type="text"  class="inputTxt" placeholder="身份证号"/></li>
+            <li><input name="tel" type="text"  class="inputTxt" placeholder="手机号"/></li>
+            <li><input name="bank" type="text"  class="inputTxt" placeholder="开户银行"/></li>
+            <li><input name="" type="submit" class="inputBut" value="提交" /></li>
+        </ul>
+        </form>
+    </div>
+            <script>
+	$(function(){
+		$(".inputBut").click(function(){
+			$("input").each(function(){
+				if($(this).val()==''){
+			alert('请完整输入信息');
+			return false;
+			}	
+			});
+		});
+});
+       </script>
+</body>
+</html>

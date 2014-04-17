@@ -1,0 +1,28 @@
+
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<meta content="noindex,nofollow" name="robots">
+<link href="/static/myadmin/css/login.css" rel="stylesheet" type="text/css" />
+<title>亿米传媒业务管理后台</title>
+</head>
+    <body class="login login-action-login wp-core-ui" >
+      <div id="login" >
+          <h1 align="center">亿米传媒业务管理后台</h1>
+          <form method="post" action="{% url 'yimi_admin:login' %}" id="loginform" name="loginform">{% csrf_token %}
+            <p>
+                <label for="user_login">用户名<br>
+                <input type="text" size="20" class="input" id="user_login" name="username"></label>
+            </p>
+            <p>
+              <label for="user_pass">密码<br>
+              <input type="password" size="20" value="" class="input" id="user_pass" name="password"></label>
+            </p>
+            <p class="submit">
+              <input type="hidden" value={{next|default:''}} name="next" />
+              <input type="submit" value="submit" class="btn button-primary button-large" id="wp-submit" name="wp-submit">
+            </p>
+          </form>
+      </div>   
+    </body>
+</html>

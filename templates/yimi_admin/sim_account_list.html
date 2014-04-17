@@ -1,0 +1,61 @@
+{% extends "yimi_admin/base.html" %}
+{% block right_div %}
+<link href="/static/watch/css/change.css" rel="stylesheet" type="text/css" />
+
+<div id="content" class="span10">
+    <div class="wrapper">
+        <div class="widget">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <h6>申请模拟账号</h6>
+                    
+                </div>
+            </div>
+
+            <div class="widget">
+                              
+                <ul class="options-bar">
+                    <li>
+                        <div class="  align-left">
+
+                        
+                        </div>  
+                    </li>
+                </ul>
+
+            </div>
+            <!-- /options bar -->                            
+            <div class="table-overflow">
+                <table class="table table-striped table-bordered table-checks media-table">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" name="checkRow" class="styled all-select" style="width:16px"/></th>
+                            <th>姓名</th>
+                            <th>身份证</th>
+                            <th>电话</th>
+                            <th>位置</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for account in sim_accounts %}
+                        <tr>
+                            <th><input type="checkbox" name="artwork_ids[]" class="styled" style="width:16px"  /></th>
+
+                           <td>{account.name}</td>
+                           <td>{{account.cid}}</td>
+                           <td>{{account.tel}}</td>
+                           <td>{{account.lbs}}</td>
+                        </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="/static/myadmin/css/list.css" />
+
+
+{% endblock %}

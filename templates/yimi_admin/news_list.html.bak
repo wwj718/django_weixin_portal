@@ -1,0 +1,17 @@
+{% extends "yimi_admin/base.html" %}
+{% block right_div %}
+{% for n in news %}
+<div>
+    {% for article in n.articles.all %}
+    <ul>
+        <li><a href="{% url 'yimi_admin:article_detail' article.id %}">{{article.title}}</a></li>
+        <li>{{article.get_description}}</li>
+        <li><img src="{{article.get_image_url}}" width=100 height=100 /></li>
+        <li><a href="{% url 'yimi_admin:article_delete' article.id %}">删除</a>  <a href="{% url 'yimi_admin:article_update' article.id %}" >编辑</a></li>
+    </ul>
+    {% endfor %}
+</div>
+<hr />
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends "yimi_admin/base.html" %}
+{% block right_div %}
+<link href="/static/watch/css/change.css" rel="stylesheet" type="text/css" />
+
+<div id="content" class="span10">
+    <div class="wrapper">
+        <div class="widget">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <h6>管理</h6>
+                    
+                </div>
+            </div>
+
+            <div class="widget">
+                              
+                <ul class="options-bar">
+                    <li>
+                        <div class="  align-left">
+
+                        <form action="{% url 'yimi_admin:groups_add' %}" method="get">
+                            <div class="bar-button"><input type='text' name='name' id='group-name-value' />
+是否白名单组（可看到未显示的文章分类）：是<input type="radio" id="category-status-value" name="status" value="1" />
+否：<input type="radio" id="category-status-value" name="status" value="0" checked />
+                            <input type='submit' value='创建分组' id='submit-group' />
+                            </div>
+                        </form>
+
+                        </div>  
+                    </li>
+                </ul>
+
+            </div>
+            <!-- /options bar -->                            
+            <div class="table-overflow">
+                <table class="table table-striped table-bordered table-checks media-table">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" name="checkRow" class="styled all-select" style="width:16px"/></th>
+                            <th>分组名</th>
+                            <th>组人数</th>
+                            <th>是否白名单（可看到在不显示的分类中的文章）</th>
+                            <th class="actions-column">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for group in groups %}
+                        <tr>
+                            <th><input type="checkbox" name="artwork_ids[]" class="styled" style="width:16px"  /></th>
+
+                           <td>
+<span id="group-name{{group.id}}">{{group.name}}</span>
+<span id="input-group-name{{group.id}}" style="display:none">
+<form action="{% url 'yimi_admin:group_name_update' %}" method="post" >{% csrf_token %}
+<input type="text" id="group-name-value{{group.id}}" name="name" value="{{group.name}}" />
+<input type="hidden" value="{{group.id}}" name="gid" />
+白名单：<input type="radio"  name="status" {%if group.status%}checked{% endif %} value="1" />
+非白名单：<input type="radio" name="status" {%if not group.status%}checked{% endif %} value="0" />
+
+<input type="submit" value="保存" >
+</form>
+</span></td>
+                           <td>{{group.app_users.count}}</td>
+                           <td>{%if group.status %}是{% else %}否{% endif %}</td>
+                           <td>
+                            <input type="button" value="删除" onclick="location.href='{% url 'yimi_admin:groups_delete' %}?gid={{group.id}}'" />
+                            <input type="button" value="编辑" id="editor-group-name{{group.id}}"/>
+                           </td>
+                        </tr>
+
+<script type="text/javascript">
+$("#editor-group-name{{group.id}}").click(
+    function(){
+        $("#group-name{{group.id}}").hide();
+        $("#input-group-name{{group.id}}").show();
+}
+)
+
+</script>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="/static/myadmin/css/list.css" />
+
+
+{% endblock %}

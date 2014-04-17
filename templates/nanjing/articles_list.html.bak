@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Untitled Document</title>
+<link href="/static/nanjing/css/base.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<div class="wrap">
+	    {% for article in articles %}
+    	<dl class="list_box">
+        	<dt><a href="{{article.get_url}}">{{article.title}}</a></dt>
+            <dd><a href="{{article.get_url}}">{{article.get_description|safe}}</a></dd>
+        </dl>
+        {% endfor %}
+    </div>
+    <div class="tools">
+    	<a href="#" class="left">上一页</a>
+        <a href="#" class="right click">下一页</a>
+    </div>
+</body>
+</html>

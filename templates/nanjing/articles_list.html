@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>{{appitem.name}}</title>
+<link href="/static/nanjing/css/base.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<div class="wrap">
+	    {% for article in matchs %}
+    	<dl class="list_box clx">
+        	<div class="listimg"><img src="{{article.get_image_url}}" height="180px"/></div>
+        	<dt><a href="{{article.get_url}}" class="articles_list_title">{{article.title}}</a></dt>
+            <dd><a href="{{article.get_url}}" class="articles_list_dscrip">{{article.get_description|safe}}</a></dd>
+        </dl>
+        {% endfor %}
+    </div>
+    <div class="tools">
+    	<a href="{% if matchs.has_previous %}?p={{matchs.previous_page_number }}{% endif %}" class="left">上一页</a>
+        <a href="{% if matchs.has_next %}?p={{matchs.next_page_number}}{% endif %}" class="right click">下一页</a>
+    </div>
+</body>
+<script src="http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js"></script>
+<script src="/static/nanjing/js/base.js"></script>
+</html>

@@ -1,0 +1,119 @@
+{% extends "yimi_admin/base.html" %}
+{% block right_div %}
+{% if not menu_id %}<h3>新增一级菜单</h3>{% endif %}
+<div>
+    <input id="menu-name" type="text" name="name" value={{menu.name|default:"默认名称"}} />
+    <select id="type-select">
+        <option>选择菜单事件类型</option>
+        <option value="click">关键字回复</option>
+        <option value="view">跳转链接</option>
+        <option value="sub_button">增加二级菜单</option>
+    </select>
+<input type="button" value="保存" id="change-menu-name"/>
+</div>
+
+{% if message %}
+<table>
+<tr>
+    <td>{{message.keyword}}<td>
+    <td>{% if message.retype == 'text' %}
+        {{message.get_resource.content}}
+        {% elif message.retype == 'news' %}
+            {% for article in message.get_resource.articles.all %}
+            <div>
+                <p>{{article.title}}</p>
+                <p><img src="{{article.get_image_url}}" width=100 height=100></p>
+            </div>
+            {% endfor %}
+        {% endif %}
+    </td>
+</tr>
+</table>
+{% endif %}
+<table>
+{% for sub_menu in sub_menus %}
+    <tr>
+        <td>{{sub_menu.name}}</td>
+    {% if sub_menu.type == 'view' %}
+    <td>{{sub_menu.url}}</td>
+    {% elif sub_menu.type == 'click' %}
+    <td>{{sub_menu.get_message.keyword}}</td>
+    {% endif %}
+    <td><a href="{% url 'yimi_admin:sub_menu_update' %}?submenuid={{sub_menu.id}}&menuid={{menu.id}}">编辑<a></td>
+    <td><a href="{% url 'yimi_admin:menu_delete' %}?menuid={{sub_menu.id}}&type=submenu">删除<a></td>
+    </tr>
+{% endfor %}
+</table>
+
+<div id="click-event" style="display:none" >
+    <table border="1px">
+    {% for message in messages %}
+        <tr>
+            <td>{{message.keyword}}<td>
+            <td>{% if message.retype == 'text' %}
+                {{message.get_resource.content}}
+                {% elif message.retype == 'news' %}
+                    {% for article in message.get_resource.articles.all %}
+                    <div>
+                        <p>{{article.title}}</p>
+                        <p><img src="{{article.get_image_url}}" width=100 height=100></p>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </td>
+            <td><input type="button" class="message-submit" value="选择" href-value="{% url 'yimi_admin:menu_click' %}?messageid={{message.id}}&type=menu&menuid={{menu.id}}"/></td>
+        </tr>
+    {% endfor %}
+    </table>
+</div>
+
+<div id="view-event" {% if menu.type != 'view' %} style="display:none" {% endif %} >
+<form id="menu-url-form" method="post" action="{% url 'yimi_admin:menu_url' %}">{% csrf_token %}
+<input type="text" name="url" id="url-value" value="{{menu.url|default:''}}" />
+<input type="hidden" name="menuid" value="{{menu.id}}" />
+<input type="hidden" name="name" id="menu-name-url" />
+<input type="submit" name="提交" />
+</form>
+</div>
+
+
+
+<script type="text/javascript">
+$("#type-select").change(
+    function(){
+        if($(this).val()=="click"){
+            $("#click-event").show();
+            $("#view-event").hide();
+            $("#subbutton-event").hide();
+        }else if($(this).val()=="view"){
+            $("#click-event").hide();
+            $("#view-event").show();
+            $("#subbutton-event").hide();
+        }else if($(this).val()=="sub_button"){
+            $("#click-event").hide();
+            $("#view-event").hide();
+            location.href="{% url 'yimi_admin:sub_menu_add' %}?menuid={{menu.id}}";
+        }
+    }
+)
+
+$("#change-menu-name").click(
+    function(){
+        location.href = "{% url 'yimi_admin:menu_change_name' %}?menuid={{menu.id}}&tag=menu&name="+$("#menu-name").val()
+}
+)
+
+$('.message-submit').click(
+    function(){
+       location.href = $(this).attr("href-value")+"&name="+$("#menu-name").val();
+}
+)
+$("#menu-url-form").submit(
+    function(){
+        $("#menu-name-url").val($("#menu-name").val());
+}
+)
+
+</script>
+
+{% endblock %}

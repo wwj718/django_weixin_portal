@@ -1,0 +1,25 @@
+body.login { background: none repeat scroll 0 0 #FBFBFB; min-width: 0;text-align:center;}
+body { font-family: sans-serif; font-size: 12px; line-height: 1.4em; min-width: 600px; }
+html, body { height: 100%; margin: 0; padding: 0; }
+h1 { font-size: 2em; margin: 0.67em 0; }
+h1, h2, h3, h4, h5, h6 { display: block; font-weight: bold; } 
+#login{margin:auto;padding: 114px 0 0; width: 320px;text-align:left;}
+.login form { background: none repeat scroll 0 0 #FFFFFF; border: 1px solid #E5E5E5; box-shadow: 0 4px 10px -1px rgba(200, 200, 200, 0.7); font-weight: normal; margin-left: 8px; padding: 26px 24px 46px; }
+label, #your-profile label + a { vertical-align: middle; }
+.login form .input, .login input[type="text"] { background: none repeat scroll 0 0 #FBFBFB; border: 1px solid #E5E5E5; box-shadow: 1px 1px 2px rgba(200, 200, 200, 0.2) inset; color: #555555; font-size: 24px; font-weight: 200; line-height: 1; margin-bottom: 16px; margin-right: 6px; margin-top: 2px; outline: 0 none; padding: 3px; width: 100%; }
+#login form p { margin-bottom: 0; } 
+.login label { color: #777777; font-size: 14px; }
+.wp-core-ui button::-moz-focus-inner, .wp-core-ui input[type="reset"]::-moz-focus-inner, .wp-core-ui input[type="button"]::-moz-focus-inner, .wp-core-ui input[type="submit"]::-moz-focus-inner { border-color: transparent; border-style: solid none; border-width: 1px 0; padding: 0; }
+.wp-core-ui .button-primary { background-color: #21759B; background-image:  linear-gradient(to bottom, #2A95C5, #21759B); border-color: #21759B #21759B #1E6A8D; box-shadow: 0 1px 0 rgba(120, 200, 230, 0.5) inset; color: #FFFFFF; text-decoration: none; text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1); }
+.login #nav, .login #backtoblog { margin: 0 0 0 16px; padding: 16px 16px 0; text-shadow: 0 1px 0 #FFFFFF; }
+.wp-core-ui button::-moz-focus-inner, .wp-core-ui input[type="reset"]::-moz-focus-inner, .wp-core-ui input[type="button"]::-moz-focus-inner, .wp-core-ui input[type="submit"]::-moz-focus-inner { border-color: transparent; border-style: solid none; border-width: 1px 0; padding: 0; }
+.wp-core-ui .button-primary { background-color: #21759B; background-image: linear-gradient(to bottom, #2A95C5, #21759B); border-color: #21759B #21759B #1E6A8D; box-shadow: 0 1px 0 rgba(120, 200, 230, 0.5) inset; color: #FFFFFF; text-decoration: none; text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1); }
+.login .button-primary { float: right; }
+.wp-core-ui button::-moz-focus-inner, .wp-core-ui input[type="reset"]::-moz-focus-inner, .wp-core-ui input[type="button"]::-moz-focus-inner, .wp-core-ui input[type="submit"]::-moz-focus-inner { border-color: transparent; border-style: solid none; border-width: 1px 0; padding: 0; }
+.wp-core-ui button::-moz-focus-inner, .wp-core-ui input[type="reset"]::-moz-focus-inner, .wp-core-ui input[type="button"]::-moz-focus-inner, .wp-core-ui input[type="submit"]::-moz-focus-inner { border-color: transparent; border-style: solid none; border-width: 1px 0; padding: 0; }
+.wp-core-ui button::-moz-focus-inner, .wp-core-ui input[type="reset"]::-moz-focus-inner, .wp-core-ui input[type="button"]::-moz-focus-inner, .wp-core-ui input[type="submit"]::-moz-focus-inner { border-color: transparent; border-style: solid none; border-width: 1px 0; padding: 0; }
+.wp-core-ui .button.button-large, .wp-core-ui .button-group.button-large .button { height: 30px; line-height: 28px; padding: 0 12px 2px; }
+.wp-core-ui .button-primary { background-color: #21759B; background-image: linear-gradient(to bottom, #2A95C5, #21759B); border-color: #21759B #21759B #1E6A8D; box-shadow: 0 1px 0 rgba(120, 200, 230, 0.5) inset; color: #FFFFFF; text-decoration: none; text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1); }
+.wp-core-ui .button-primary { background-color: #21759B; background-image: linear-gradient(to bottom, #2A95C5, #21759B); border-color: #21759B #21759B #1E6A8D; box-shadow: 0 1px 0 rgba(120, 200, 230, 0.5) inset; color: #FFFFFF; text-decoration: none; text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1); }
+.wp-core-ui .button, .wp-core-ui .button-secondary { background: linear-gradient(to bottom, #FEFEFE, #F4F4F4) repeat scroll 0 0 #F3F3F3; border-color: #BBBBBB; color: #333333; text-shadow: 0 1px 0 #FFFFFF; }
+.wp-core-ui .button, .wp-core-ui .button-primary, .wp-core-ui .button-secondary { -moz-box-sizing: border-box; border-radius: 3px 3px 3px 3px; border-style: solid; border-width: 1px; cursor: pointer; display: inline-block; font-size: 12px; height: 24px; line-height: 23px; margin: 0; padding: 0 10px 1px; text-decoration: none; white-space: nowrap; }

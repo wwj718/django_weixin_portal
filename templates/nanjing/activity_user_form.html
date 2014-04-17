@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi" />
+
+<title>{{activity.title}}</title>
+<link href="/static/nanjing/css/base.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body >
+	<div class="formWrap">
+	    <form action="{% url 'nanjing:activity_user' appitem.slug activity.id %}" method="post">{%csrf_token%}
+    	<ul class="formList">
+        	<li class="title">参加活动报名：</li>
+            <li><input name="name" type="text"  class="inputTxt" placeholder="姓名"/></li>
+            <li><input name="cid" type="text"  class="inputTxt" placeholder="身份证号"/></li>
+            <li><input name="tel" type="text"  class="inputTxt" placeholder="手机号"/></li>
+            <li><input name="" type="submit" class="inputBut" placeholder="提交" /></li>
+        </ul>
+        </form>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,25 @@
+{% extends "yimi_admin/base.html" %}
+{% block right_div %}
+<div>
+<table border="1px">
+{% for message in messages %}
+    <tr>
+        <td>{{message.keyword}}<td>
+        <td>{% if message.retype == 'text' %}
+            {{message.get_resource.content}}
+            {% elif message.retype == 'news' %}
+                {% for article in message.get_resource.articles.all %}
+                <div>
+                    <p>{{article.title}}</p>
+                    <p><img src="{{article.get_image_url}}" width=100 height=100></p>
+                </div>
+                {% endfor %}
+            {% endif %}
+        </td>
+        <td><a href="{% url 'yimi_admin:reply' %}?tag={{message.tag}}&keyword={{message.keyword}}">编辑</a></td>
+    </tr>
+{% endfor %}
+</table>
+</div>
+
+{% endblock %}

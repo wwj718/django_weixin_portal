@@ -1,0 +1,186 @@
+{% extends "yimi_admin/base.html" %}
+{% load tag_extras %}
+{% block right_div %}
+<link href="/static/watch/css/change.css" rel="stylesheet" type="text/css" />
+
+<div id="content" class="span10" style="height:1000px;" >
+    <div class="wrapper">
+        <div class="widget">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <h6>回复管理</h6>
+                    
+                </div>
+            </div>
+            <!-- /options bar -->                            
+            <div class="table-overflow">
+
+
+
+<table class="mainTable">
+       {% if get_data.tag == 'keyword_recontent' %}
+      <tr>
+        <td width="150" class="txtRight">关键字：</td>
+        <td style=" padding:20px 10px;"><input name="keyword" type="text" class="inputTxt w500" value="{% if get_data.keyword %}{{get_data.keyword}}{% else %}{{message.keyword|default:'默认'}}{% endif %}" id="keyword-value"/></td>
+      </tr>
+        {% endif %}
+      <tr>
+        <td width="150" class="txtRight">素材类型：</td>
+        <td style=" padding:20px 10px;"><span class="abut mr10" id="text-show">文本</span><span href="" class="abut mr10" id="news-show" >图文</span></td>
+      </tr>
+      <tr >
+        <td></td>
+        <td>
+        <table width="500" border="0" cellspacing="0" id="text-table"  cellpadding="0" style="{% if message.retype == 'news' or get_data.listchoid  %}display:none;{% endif %}">
+          <tr>
+            <td class="title">撰写文本</td>
+          </tr>
+          <tr>
+            <td style="border-bottom:none;"><textarea name="content" cols="" rows="8" class="w500" id="text-content" >{{message.text_set.first|default:''}}</textarea></td>
+          </tr>
+          <tr>
+            <td style="border-top:none;" align="center"><input name="" type="button" id='submit-text' class="inputBut mr10"  value="提交文本"/></td>
+          </tr>
+        
+        </table>
+        {% if get_data.listchoid or message.retype == 'news' %}
+        <form action="{% url 'yimi_admin:message_update' %}?mid={{message.id}}&retype=news&keyword=" method="post" id="news-post-form"  >{%csrf_token%}
+        <table width="100%" class="mainTable imgTxt new-articles-list-top" >
+            <input name="keyword" type="hidden" id='keyword-bak-value' class="inputTxt w40 txtCe"  value=""/>
+          {% for article in news_articles %}
+          <tr>
+            <td width="50"><input name="order-{{article.id}}" type="text" class="inputTxt w40 txtCe"  value="{{article.id|get_dict_value:order_dic|default:"0"}}"/></td>
+            <td>{{article.title}}</td>
+          </tr>
+          {% endfor %}
+        </table>
+        <div style="text-align:center; padding:10px;" class="new-articles-list-top" ><input name="" type="submit" class="inputBut mr10" id="submit-news"  value="提交"/></div>
+        </form>
+        {% endif %}        
+        </td>
+      </tr>
+<script type="text/javascript">
+
+$('#news-post-form').submit(
+    function(){
+    $("#keyword-bak-value").val($("#keyword-value").val())
+   // location.href = "{% url 'yimi_admin:message_update' %}?mid={{message.id}}&retype=news"+"&keyword="{%if get_data.tag == 'keyword_recontent' %}+$("#keyword-value").val(){% endif %}+"&listchoid="+
+})
+
+</script>
+    </table>
+    
+    <br /><br /><br /><br />
+    <!--弹出框-->
+    <div id="news-list-all" class="mainBox" style="width:700px;height:800px; position:absolute; left:5%; top:5%;{% if get_data.p %}display:block;{% elif not news_show or get_data.closeshow == '1' %}display:none;{% endif %}">
+        <input type="hidden" id="checked-article" value="{{get_data.listchoid}}">
+        <div class="mainNbox">
+            <h2>图文</h2><span style="float:right; margin-top:-35px; margin-right:20px;"><a id="close-news-list-all" class="clos">关闭</a></span>
+            <div class="clx"></div>
+            <div style=" width:350px; float:left;">
+            {% for article in news_articles %}
+              <dl class="menuList">
+                <dt>{{article.title}}</dt>
+              <!--  <dd class="con">{{article.get_description}}</dd> -->
+            </dl>
+            {% endfor %}
+            <div style="text-align:center; padding:10px;"><input name="" type="button" class="inputBut mr10" id="submit-listchoid" value="确定"/></div>
+            </div>
+            <div style="width:350px; float:right;">
+            {% for article in return_articles %}
+            <dl class="menuList">
+                <dt><label class="mr10"><input name="" type="checkbox" value="" id="choid{{article.id}}" /></label>{{article.title}}</dt>
+           <!--     <dd class="con">{{article.get_description}}</dd> -->
+            </dl>
+
+<script type="text/javascript">
+$('#choid{{article.id}}').click(function(){
+    var value =$("#checked-article").val()
+    var art = "[{{article.id}}]"
+    if($(this).attr("checked") && value.indexOf(art)<0){
+            $("#checked-article").val(value+art)
+            location.href = "?{{get_data_url|cut_get_field:close_show_field|safe}}mid={{message.id}}&listchoid="+$("#checked-article").val() {%if get_data.tag == 'keyword_recontent' %}+"&keyword="+$("#keyword-value").val(){% endif %}
+    }
+    else if(!$(this).attr("checked")){
+        var new_value = value.replace(art, "")
+        $("#checked-article").val(new_value)
+        location.href = "?{{get_data_url|cut_get_field:close_show_field|safe}}mid={{message.id}}&listchoid="+$("#checked-article").val() {%if get_data.tag == 'keyword_recontent' %}+"&keyword="+$("#keyword-value").val(){% endif %}
+    }
+})
+
+if($("#checked-article").val().indexOf("[{{article.id}}]") >= 0){
+    $('#choid{{article.id}}').attr('checked', true);
+}
+
+</script>
+
+            {% endfor %}
+            <!--翻页-->
+            <div class="digg sh_page">
+{% if return_articles.has_previous%}
+<span><a href="?{{get_data_url|safe}}p={{return_articles.previous_page_number }}">&lt; </span>
+{%else%}
+<span class="disabled">&lt; </span>
+{%endif%}
+{% for p in show_pages %}
+<span ><a href="?{{get_data_url|safe}}p={{p}}">{{p}}</a></span>
+{% endfor %}
+
+{% if return_articles.has_next  %}
+<span ><a href="?{{get_data_url|safe}}p={{ return_articles.next_page_number }}">&gt; </a></span>
+{% else %}
+<span class="disabled">&gt; </span>
+{% endif %}
+
+
+</div>
+
+
+            <!--end-->
+            
+            </div>
+         
+            
+            
+        </div>
+    </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="/static/myadmin/css/list.css" />
+<script type="text/javascript">
+$('#submit-listchoid').click(function(){
+    location.href="?{{get_data_url|cut_get_field:close_show_field|safe}}listchoid="+$("#checked-article").val() +"&closeshow=1&keyword="+$("#keyword-value").val()
+})
+
+$('#submit-text').click(
+    function(){
+    location.href = "{% url 'yimi_admin:message_update' %}?mid={{message.id}}&retype=text&content="+$("#text-content").val()+"&keyword="{%if get_data.tag == 'keyword_recontent' %}+$("#keyword-value").val(){% endif %}
+})
+$('#text-show').click(function(){
+    $("#text-table").show();   
+    $("#news-list-all").hide();   
+    $(".new-articles-list-top").hide();
+})
+
+$('#news-show').click(function(){
+    $("#text-table").hide();   
+    $("#news-list-all").show();   
+    $(".new-articles-list-top").show();
+})
+
+$("#close-news-list-all").click(function(){
+    $("#news-list-all").hide();   
+    
+})
+if($("#checked-article").val().length==0){
+$("#submit-listchoid").hide()
+}
+</script>
+            
+
+{% endblock %}

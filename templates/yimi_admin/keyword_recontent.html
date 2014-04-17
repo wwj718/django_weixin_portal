@@ -1,0 +1,68 @@
+{% extends "yimi_admin/base.html" %}
+{% block right_div %}
+<link href="/static/watch/css/change.css" rel="stylesheet" type="text/css" />
+
+<div id="content" class="span10">
+    <div class="wrapper">
+        <div class="widget">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <h6>管理</h6>
+    
+                </div>
+            </div>
+
+            <div class="widget">
+    
+                <ul class="options-bar">
+                    <li>
+                        <div class="  align-left">
+                            <div class="bar-button"><button type="button" class="btn" onclick="location.href='{% url 'yimi_admin:reply' %}?tag=keyword_recontent&add=add'" >添加关键字</button></div>
+                        </div>  
+                    </li>
+                </ul>
+            </div>
+
+            <!-- /options bar -->                            
+            <div class="table-overflow">
+                <table class="table table-striped table-bordered table-checks media-table">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" name="checkRow" class="styled all-select" style="width:16px"/></th>
+                            <th>关键字</th>
+                            <th>类型</th>
+                            <th>标题或文本回复内容</th>
+                            <th class="actions-column">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for message in messages %}
+                        <tr>
+                            <th><input type="checkbox" name="artwork_ids[]" class="styled" style="width:16px"  /></th>
+
+                           <td>{{message.keyword}}</td>
+                            <td>{{message.get_retype_display}}</td>
+                           <td>
+{% if message.retype == 'text' %}
+            {{message.get_resource.content}}
+            {% elif message.retype == 'news' %}
+                {% for article in message.get_resource.articles.all %}
+                <div>
+                    <p>{{article.title}}</p>
+                </div>
+                {% endfor %}
+            {% endif %}
+                           </td>
+                           <td><a href="{% url 'yimi_admin:reply' %}?tag={{message.tag}}&keyword={{message.keyword}}&mid={{message.id}}">编辑</a> <a href="{% url 'yimi_admin:keyword_delete' %}?mid={{message.id}}">删除</a> </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="/static/myadmin/css/list.css" />
+
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends "yimi_admin/base.html" %}
+{% block right_div %}
+<link href="/static/watch/css/change.css" rel="stylesheet" type="text/css" />
+
+<div id="content" class="span10">
+    <div class="wrapper">
+        <div class="widget">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <h6>管理</h6>
+                    
+                </div>
+            </div>
+
+            <div class="widget">
+                              
+                <ul class="options-bar">
+                    <li>
+                        <div class="  align-left">
+                            <div class="bar-button"><button type="button" class="btn"  id="sendCreateMenu" >发送修改</button></div>
+                        </div>  
+                    </li>
+                </ul>
+            </div>
+            <!-- /options bar -->                            
+            <div class="table-overflow">
+                {% for menu_button in appitem.menu_buttons.all %}
+                <table class="table table-striped table-bordered table-checks media-table">
+                    <thead>
+                        <tr>
+                            <th>一级菜单{{forloop.counter}}</th>
+                            <th>名称</th>
+                            <th>类型</th>
+                            <th>资源</th>
+                            <th class="actions-column">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th><input type="checkbox" name="artwork_ids[]" class="styled" style="width:16px"  /></th>
+
+                           <td style="width:200px;height:100px;">{{menu_button.name}}</td>
+                           <td style="width:200px;height:100px;">{{menu_button.get_type_display}}</td>
+                        <td  style="width:200px;height:100px;" class="limit_url">
+                        {% if menu_button.type == 'click' %}  
+                            {{menu_button.key}}
+                        {% elif menu_button.type == 'view' %}
+                            {{menu_button.url}}
+                        {% elif menu_button.type == 'sub_button' %}
+                            {% for button in menu_button.sub_button.all %}
+                            <ul>
+                                    <li>{{button.name}}</li>
+                                    <li>{{button.get_type_display}}</li>
+                                {% if button.type == 'click' %}  
+                                    <li>{{button.key}}</li>
+                                {% elif menu_button.type == 'view' %}
+                                    <li >{{menu_button.url}}</li>
+                                {% endif %}
+                            </ul>
+                            {% endfor %}
+                        {% endif %}
+                        </td>
+                            <td style="width:200px;height:100px;"><a href="{% url 'yimi_admin:menu_update' %}?menuid={{menu_button.id}}">编辑</a> <a href="{% url 'yimi_admin:menu_delete' %}?menuid={{menu_button.id}}&type=menu">删除</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="/static/myadmin/css/list.css" />
+<script type="text/javascript">
+$('#sendCreateMenu').click(function(){
+$.ajax({
+    url: "{% url 'yimi_admin:send_create_menu' %}",
+    type: "GET",
+    dataType: "json",
+    success:function(data){
+        if(data.error==0){
+            alert("菜单修改成功，由于缓存，请重新关注账号查看！");
+        }else{alert("修改失败,原因有如下几种情况：一级菜单最多5个汉字，二级菜单最多7个汉字;url长度是否合法;一级菜单最多三个，二级菜单最多五个!")}
+    }
+})
+
+});
+
+  /*溢出文字删除*/
+$.fn.fonts = function(option){
+    option = $.extend({},$.fn.fonts.option,option);
+    return this.each(function(){
+    var objString = $(this).text(),
+        objLength = $(this).text().length,
+      num = option.fontNum;
+    if(objLength > num){
+            objString = $(this).html("<a href='"+objString+"'>"+objString.substring(50,num+50) + "...</a>");
+    }
+                  })}
+  // default options
+      $(".limit_url").fonts({
+        fontNum:30 
+            });
+   /*End溢出文字删除*/
+</script>
+{% endblock %}

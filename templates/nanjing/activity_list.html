@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>{{appitem.name}}</title>
+<link href="/static/nanjing/css/base.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<div class="wrap">
+	    {% for activity in matchs %}
+    	<dl class="list_box" style="padding:30px;">
+        	<dt style="font-size:40px;">{{activity.title}}</dt>
+           {% if activity.a_time %} <dd><b>时间：</b>{{activity.a_time}}</dd> {% endif %}
+           {% if activity.xingshi %} <dd><b>形式：</b>{{activity.xingshi}}</dd> {% endif %}
+           {% if activity.place %} <dd><b>地点：</b>{{activity.place}}</dd> {% endif %}
+           {% if activity.speaker %} <dd><b>主讲：</b>{{activity.speaker}}</dd> {% endif %}
+          {% if activity.count %}  <dd><b>人数：</b>{{activity.count}}</dd> {% endif %}
+           {% if activity.content %} <dd><b>内容：</b>{{activity.content|safe}}</dd> {% endif %}
+            <dd style="height:30px;"><button style="float:right;width:100px;height:45px;"
+ onclick="window.location.href='http://{{appitem.domain}}{% url 'nanjing:activity_user' appitem.slug activity.id %}'">报名</button></dd>
+        </dl>
+        {% endfor %}
+    </div>
+    <div class="tools">
+    	<a href="{% if matchs.has_previous %}?p={{matchs.previous_page_number }}{% endif %}" class="left">上一页</a>
+        <a href="{% if matchs.has_next %}?p={{matchs.next_page_number}}{% endif %}" class="right click">下一页</a>
+    </div>
+</body>
+</html>

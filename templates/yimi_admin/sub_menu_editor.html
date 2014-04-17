@@ -1,0 +1,169 @@
+{% extends "yimi_admin/base.html" %}
+{% block right_div %}
+
+
+<link href="/static/watch/css/change.css" rel="stylesheet" type="text/css" />
+
+<div id="content" class="span10">
+    <div class="wrapper">
+        <div class="widget">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <h6>{% if not sub_menu_id %}新增二级菜单{% else %}修改二级菜单：{{sub_menu.name}}{% endif %}</h6>
+    
+                </div>
+            </div>
+            <!-- /options bar -->    
+            <div class="table-overflow">
+
+
+<table class="mainTable">
+      
+      <tr>
+        <td class="txtRight">名称：</td>
+        <td><input id="sub-menu-name" type="text" class="inputTxt w240" name="name" value={{sub_menu.name|default:"默认名称"}} />
+        <input type="button" value="保存修改名称" id="change-menu-name" class="inputTxt w240" /></td>
+      </tr>
+      <tr>
+        <td class="txtRight">事件：</td>
+        <td>
+             <select id="type-select" class="inputTxt w240"">
+                 <option>选择菜单事件类型</option>
+                 <option value="click">关键字回复</option>
+                 <option value="view">跳转链接</option>
+             </select>
+      </tr>
+      <tr id="view-event" {% if sub_menu.type != 'view' %} style="display:none" {% endif %} >
+        <td class="txtRight">链接地址</td>
+        <td>
+            <form id="sub-menu-url-form" method="post" action="{% url 'yimi_admin:menu_url' %}">{% csrf_token %}
+            <input type="text" name="url" id="url-value" value="{{sub_menu.url|default:''}}"  class="inputTxt w240"/>
+            <input type="hidden" name="menuid" value="{{sub_menu.id}}" />
+            <input type="hidden" name="name" id="sub-menu-name-url" />
+            <input type="hidden" name="type" value="submenu" />
+            <input type="submit" name="提交"  class="inputTxt w240"/>
+            </form>
+        </td>
+      </tr>
+      
+</table>
+
+{% if message %}
+<table class="sh_table">
+<tr>
+    <td>{{message.keyword}}<td>
+    <td>{% if message.retype == 'text' %}
+        {{message.get_resource.content}}
+        {% elif message.retype == 'news' %}
+            {% for article in message.get_resource.articles.all %}
+            <div>
+                <p>{{article.title}}</p>
+                <p><img src="{{article.get_image_url}}" width=100 height=100></p>
+            </div>
+            {% endfor %}
+        {% endif %}
+    </td>
+</tr>
+</table>
+{% endif %}
+
+
+<div id="click-event" style="display:none" >
+
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <h6>关键字列表</h6>
+    
+                </div>
+            </div>
+
+
+                <table class="table table-striped table-bordered table-checks media-table">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" name="checkRow" class="styled all-select" style="width:16px"/></th>
+                            <th>关键字</th>
+                            <th>素材</th>
+                            <th class="actions-column">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for message in messages %}
+                        <tr>
+                            <th><input type="checkbox" name="artwork_ids[]" class="styled" style="width:16px"  /></th>
+
+                           <td>{{message.keyword}}</td>
+                           <td>
+
+                              {% if message.retype == 'text' %}
+                              {{message.get_resource.content}}
+                              {% elif message.retype == 'news' %}
+                                  {% for article in message.get_resource.articles.all %}
+                                  <div>
+                                      <p>{{article.title}}</p>
+                                  </div>
+                                  {% endfor %}
+                              {% endif %}
+                            </td>
+                           <td>
+                            <input type="button" class="message-submit" value="选择" href-value="{% url 'yimi_admin:menu_click' %}?messageid={{message.id}}&type=submenu&menuid={{sub_menu.id}}"/>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+</div>
+
+
+
+
+
+
+<script type="text/javascript">
+$("#type-select").change(
+    function(){
+        if($(this).val()=="click"){
+            $("#click-event").show();
+            $("#view-event").hide();
+            $("#subbutton-event").hide();
+	   $("#change-menu-name").hide();
+        }else if($(this).val()=="view"){
+            $("#click-event").hide();
+            $("#view-event").show();
+            $("#subbutton-event").hide();
+            $("#change-menu-name").hide();
+        }
+    }
+)
+
+
+
+$("#sub-menu-url-form").submit(
+    function(){
+        $("#sub-menu-name-url").val($("#sub-menu-name").val());
+}
+)
+
+$('.message-submit').click(
+    function(){
+       location.href = $(this).attr("href-value")+"&name="+$("#sub-menu-name").val();
+}
+)
+$("#change-menu-name").click(
+    function(){
+        location.href = "{% url 'yimi_admin:menu_change_name' %}?menuid={{sub_menu.id}}&tag=submenu&name="+$("#sub-menu-name").val()
+}
+)
+</script>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="/static/myadmin/css/list.css" />
+
+
+{% endblock %}

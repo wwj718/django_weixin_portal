@@ -1,0 +1,59 @@
+{% extends "yimi_admin/base.html" %}
+{% block right_div %}
+<div>
+
+<dd><a href="{% url 'yimi_admin:users_list' %}">全部用户</a></dd>
+{% for app_group in app_groups %}
+<dd><a href="{% url 'yimi_admin:users_list' %}?group_id={{app_group.id}}">{{app_group.name}}</a></dd>
+{% endfor %}
+<div id="create-group">创建分组</div>
+<div style="display:none" id='group-form'>
+<input type='text' name='name' id='group-name-value' /><input type='button' value='保存' id='submit-group' />
+</div>
+<table>
+<tr><th>用户名</th><th>所在组</th><th>加入组</th></tr>
+{% for user in app_users %}
+<tr>
+<td>{{user.nickname}}</td>
+<td>
+{% for app_group in app_groups %}
+{% if user in app_group.app_users.all %}
+<li>{{app_group.name}} <a href="{% url 'yimi_admin:group_remove' %}?userid={{user.id}}&groupid={{app_group.id}}">移除</a></li>
+{% endif %}
+{% endfor %}
+<td>
+<td><select class="app-group-select" uservalue="{{user.id}}">
+<option>选择分组</option>
+{% for app_group in app_groups %}
+{% if user not in app_group.app_users.all %}
+<option value="{{app_group.id}}" >{{app_group.name}}</option>
+{% endif %}
+{% endfor %}
+</select></td>
+
+{% endfor %}
+</tr>
+</table>
+
+</div>
+<script type="text/javascript">
+$('#create-group').click(
+    function(){
+        $('#group-form').show();
+})
+
+$('#submit-group').click(
+    function(){
+        location.href="{% url 'yimi_admin:groups_add' %}?groupname="+$('#group-name-value').val();
+})
+
+$(".app-group-select").change(
+    function(){
+        location.href="{% url 'yimi_admin:group_update' %}?userid="+$(this).attr('uservalue')+'&groupid='+$(this).val();
+    }
+)
+
+
+</script>
+
+{% endblock %}

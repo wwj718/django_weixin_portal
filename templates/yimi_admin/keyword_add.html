@@ -1,0 +1,65 @@
+{% extends "yimi_admin/base.html" %}
+{% block right_div %}
+<div>
+    <h3>新增关键字回复</h3>
+    <div><input type="text" name="keyword" value="{{message.keyword}}" id="keyword-input" /></div>
+    <div id='text-show'>文本</div><div id='img-text-show'>图文</div>
+    
+    <div id='text-div'> 
+    <form method="post" action="{% url 'yimi_admin:keyword_add' %}" id="text-form">{% csrf_token %}
+        <textarea name='content'></textarea>
+        <input type="hidden" name='keyword' id="keyword-value" />
+        <input type='submit' name='提交' />
+    </form>
+    </div>
+
+    <div id='news-list-div' style="display:none" >
+    {% for n in news %}
+        <div>
+            {% for article in n.articles.all %}
+            <ul>
+                <li><a href="{% url 'yimi_admin:article_detail' article.id  %}">{{article.title}}</a></li>
+                <li>{{article.get_description}}</li>
+                <li><img src="{{article.get_image_url}}" width=100 height=100 /></li>
+            </ul>
+            {% endfor %}
+            <div><input type="button" href-value="{% url 'yimi_admin:keyword_add' %}?n={{n.id}}" id="change-news{{n.id}}" value="选择" /></div>
+        </div>
+<script type="text/javascript">
+
+$("#change-news{{n.id}}").click(
+    function(){
+        var keyword = $("#keyword-input").val();
+       location.href = $(this).attr("href-value")+"&keyword="+keyword;
+    }
+)
+</script>
+    {% endfor %}
+    </div>
+
+</div>
+<script type="text/javascript">
+$("#img-text-show").click(
+    function(){
+    $("#text-div").hide();
+    $("#news-list-div").show();
+    $("#news-div").show();
+}
+)
+$("#text-show").click(
+    function(){
+    $("#text-div").show();
+    $("#news-list-div").hide();
+    $("#news-div").hide();
+})
+
+$("#text-form").submit(
+    function(){
+        $("#keyword-value").val($("#keyword-input").val());
+    }   
+)
+
+
+</script>
+
+{% endblock %}

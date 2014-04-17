@@ -1,0 +1,121 @@
+{% extends "yimi_admin/base.html" %}
+{% block right_div %}
+<link href="/static/watch/css/change.css" rel="stylesheet" type="text/css" />
+
+<div id="content" class="span10">
+    <div class="wrapper">
+        <div class="widget">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <h6>{% if article %}修改文章{% else %}添加文章{% endif %}</h6>
+                    
+                </div>
+            </div>
+            <!-- /options bar -->                            
+            <div class="table-overflow">
+
+<form action="{% url 'yimi_admin:news_add' %}?article={{article.id}}" id="form-news" method="post" enctype='multipart/form-data' >{% csrf_token %}
+<table class="mainTable">
+      <tr>
+        <td width="150" class="txtRight">分类：</td>
+        <td>
+        <select id="category-option"  class="inputTxt w240 mr10" >
+    <option class="inputSelect w240" value="" >选择已有分类</option>
+    {% for category in out_categories %}
+            <label class="pr">
+    <option class="inputSelect w240">{{category.name}}</option>
+            </lable>
+    {% endfor %}
+    </select>
+            <label><input name="category" id="category-value"  type="text" class="inputTxt w240 mr10" placeholder="新增分类" /></label>
+        </td>
+      </tr>
+      <tr>
+        <td class="txtRight">标题：</td>
+        <td><input name="title" type="text" class="inputTxt w500 sh_nes" value="{{article.title}}" />*<span class="sh_error">请正确填写标题</span></td>
+      </tr>
+      <tr>
+        <td class="txtRight">作者：</td>
+        <td><input name="author" type="text" class="inputTxt sh_nes w240" value="{{article.author}}"  />*<span class="sh_error">请正确填写作者</span></td>
+      </tr>
+      <tr>
+        <td class="txtRight">摘要：</td>
+        <td><textarea name="description" id="news-des"  cols="" rows="5" class="w500 sh_nes">{{article.description}}</textarea>*<span class="sh_error">请正确填写摘要</span></td>
+      </tr>
+      <tr>
+        <td style="border-bottom:1px solid #fff;" class="txtRight">上传封面：</td>
+        <td ><input name="image" type="file" /><span class="info">选择需要上传的图片文件，格式JPG、BMP、GIF、PNG</span></td>
+      </tr>
+      {%if article.get_image_url and article.get_image_url != '/'%}
+      <tr>
+        <td>&nbsp;</td>
+        <td><img src="{{article.get_image_url}}" width="157" height="104" /></td>
+      </tr>
+      {% endif %}
+      <tr>
+        <td class="txtRight">正文：</td>
+        <td><script id="container-ueditor" name="content" type="text/plain">{{article.content|safe}}</script></td>
+      </tr>
+      <tr>
+        <td class="txtRight">原文链接：</td>
+        <td><input name="url" type="text" class="inputTxt w500 sh_nes" value="{{article.url}}" />*<span class="sh_error">请正确填写原文链接</span></td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center"><input type="button" id="submit-button" class="inputBut mr10 submit"  value="提交"/></td>
+      </tr>
+    </table>
+</form>
+    <script type="text/javascript">
+    var editor = UE.getEditor('container-ueditor')
+</script>
+
+<script type="text/javascript">
+$("#submit-button").click(function(){
+    var des = $("#news-des").val();
+	 var a = 0;
+        $('.sh_nes').each(function() {
+            if ($(this).val() == '') {
+                a = 1;
+            }
+        });
+        if (a == 1) {
+            alert('请完整填写表单');
+        }else if(des.length>120){
+        alert("摘要不能超过120个字")
+    }else{
+        $("#form-news").submit()
+    }
+})
+
+
+
+
+
+
+$(function() {
+    $("input,textarea").blur(function() {
+        if ($(this).val() == '') {
+            $(this).next().addClass('visible');
+        } else {
+            $(this).next().removeClass('visible');
+        }
+    });
+
+});
+</script>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$("#category-option").change(
+    function(){
+        $("#category-value").val($(this).val())
+    }   
+)
+</script>
+
+<link rel="stylesheet" href="/static/myadmin/css/list.css" />
+
+{% endblock %}

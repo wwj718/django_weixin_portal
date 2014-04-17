@@ -1,0 +1,66 @@
+{% extends "yimi_admin/base.html" %}
+{% block right_div %}
+
+
+<div>
+    {% for article in news.articles.all %}
+    <ul>
+        <li><a href="{% url 'yimi_admin:article_detail' article.id %}">{{article.title}}</a></li>
+        <li>{{article.get_description}}</li>
+        <li><img src="{{article.get_image_url}}" width=100 height=100 /></li>
+        <li><a href="{% url 'yimi_admin:article_delete' article.id %}">删除</a>  <a href="{% url 'yimi_admin:article_update' article.id %}" >编辑</a></li>
+    </ul>
+    {% endfor %}
+</div>
+
+<form action="{% url 'yimi_admin:news_add' %}?news_id={{news.id}}" method="post" enctype='multipart/form-data' >{% csrf_token %}
+<div>
+<input type='hidden' value={{news.id}} name="news_id" />
+<table>
+<tr>
+    <td>分类:</td>
+    <td><input type="text" name="category" placeholder="分类" id="category-value" />
+    <select id="category-option">
+    {% for category in appitem.categories.all %}
+    <option>{{category.name}}</option>
+    {% endfor %}
+    </select>
+    </td>
+</tr>
+<tr>
+    <td>标题:</td>
+    <td><input type="text" name="title" placeholder="标题" /></td>
+</tr>
+<tr>
+    <td>摘要</td>
+    <td><input type="text" name="description" placeholder="摘要" /></td>
+</tr>
+<tr>
+    <td>上传</td>
+    <td><input type="file" name="image" placeholder="上传" /></td>
+    <td><img src="{{article.get_image_url}}" width=100 height=100 /><td>
+</tr>
+<tr>
+    <td>正文</td>
+    <td></td>
+</tr>
+<tr>
+    <td><input type="submit" name="提交" /></td>
+    <td><script id="container" name="content" type="text/plain"></script></td>
+</tr>
+</table>
+</div>
+</form>
+
+<script type="text/javascript">
+    var editor = UE.getEditor('container')
+</script>
+
+<script type="text/javascript">
+$("#category-option").change(
+    function(){
+        $("#category-value").val($(this).val())
+    }   
+)
+</script>
+{% endblock %}

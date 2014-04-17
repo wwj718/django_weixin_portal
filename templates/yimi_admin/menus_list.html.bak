@@ -1,0 +1,39 @@
+{% extends "yimi_admin/base.html" %}
+{% block right_div %}
+<div>
+<div><a href="{% url 'yimi_admin:send_create_menu' %}">发送修改</a></div>
+{% for menu_button in appitem.menu_buttons.all %}
+    <table>
+    <tr><th>{{menu_button.name}}</th>
+    <td><a href="{% url 'yimi_admin:menu_update' %}?menuid={{menu_button.id}}">编辑</a></td></tr>
+    <td><a href="{% url 'yimi_admin:menu_delete' %}?menuid={{menu_button.id}}&type=menu">删除</a></td></tr>
+    {% if menu_button.type == 'click' %}  
+    <tr>
+        <td>{{menu_button.get_type_display}}</td>
+        <td>{{menu_button.key}}</td>
+    </tr>
+    {% elif menu_button.type == 'view' %}
+    <tr>
+        <td>{{menu_button.get_type_display}}</td>
+        <td>{{menu_button.url}}</td>
+    </tr>
+    {% elif menu_button.type == 'sub_button' %}
+    
+        {% for button in menu_button.sub_button.all %}
+            <tr>
+                <td>{{button.name}}</td>
+                <td>{{button.get_type_display}}</td>
+            {% if button.type == 'click' %}  
+                <td>{{button.key}}</td>
+            {% elif menu_button.type == 'view' %}
+                <td>{{menu_button.url}}</td>
+            {% endif %}
+            </tr>
+        {% endfor %}
+    {% endif %}
+    </table>
+
+{% endfor %}
+</div>
+
+{% endblock %}

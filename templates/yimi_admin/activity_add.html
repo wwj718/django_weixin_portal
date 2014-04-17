@@ -1,0 +1,108 @@
+{% extends "yimi_admin/base.html" %}
+{% block right_div %}
+<link href="/static/watch/css/change.css" rel="stylesheet" type="text/css" />
+<script>
+$(function() {
+
+    $("input").blur(function() {
+        if ($(this).val() == '') {
+            $(this).next().addClass('visible');
+        } else {
+            $(this).next().removeClass('visible');
+        }
+    });
+
+    $('.submit').click(function() {
+        var a = 0;
+        $('.sh_nes').each(function() {
+            if ($(this).val() == '') {
+                a = 1;
+            }
+        });
+        if(a == 1){
+       	alert('请完整填写表单');
+        return false;
+        }
+    });
+});
+</script>
+
+<div id="content" class="span10">
+    <div class="wrapper">
+        <div class="widget">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <h6>新增活动</h6>
+                    
+                </div>
+            </div>
+
+            <div class="widget">
+                              
+                <ul class="options-bar">
+                    <li>
+                        <div class="  align-left">
+
+
+                        </div>  
+                    </li>
+                </ul>
+
+            </div>
+            <!-- /options bar -->                            
+
+
+<form action="{% url 'yimi_admin:activity_add' %}?aid={{activity.id}}" method="post" >{% csrf_token %}
+<table class="mainTable">
+      
+      <tr>
+        <td class="txtRight">标题：</td>
+        <td><input name="title" type="text" class="inputTxt w240 sh_nes" value="{{activity.a_title}}"  />*<span class="sh_error">请正确填写标题</span></td>
+      </tr>
+      <tr>
+        <td class="txtRight">时间：</td>
+        <td><input name="a_time" type="text" class="inputTxt w240 sh_nes" value="{{activity.a_time}}"/>*<span class="sh_error">请正确填写时间</span></td>
+      </tr>
+      <tr>
+        <td class="txtRight">形式：</td>
+        <td><input name="xingshi" type="text" class="inputTxt w240 sh_nes" value="{{activity.xingshi}}"/>*<span class="sh_error">请正确填写形式</span></td>
+      </tr>
+      <tr>
+        <td class="txtRight">地点：</td>
+        <td><input name="place" type="text" class="inputTxt w240 sh_nes" value="{{activity.place}}"/>*<span class="sh_error">请正确填写地点</span></td>
+      </tr>
+      <tr>
+        <td class="txtRight">主讲：</td>
+        <td><input name="speaker" type="text" class="inputTxt w240" value="{{activity.speaker}}"/></td>
+      </tr>
+      <tr>
+        <td class="txtRight">人数：</td>
+        <td><input name="count" type="text" class="inputTxt w240 sh_nes" value="{{activity.count|default:0}}"/>*<span class="sh_error">请正确填写人数</span></td>
+      </tr>
+      <tr>
+        <td class="txtRight">内容：</td>
+        <td>
+        <script id="container-ueditor" name="content" type="text/plain">{{activity.content|safe}}</script>
+        </td>      </tr>
+   
+      <tr>
+        <td colspan="2" align="center"><input name="" type="submit" class="inputBut mr10 submit"  value="提交"/></td>
+      </tr>
+      
+</table>
+</form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var editor = UE.getEditor('container-ueditor')
+</script>
+
+
+
+<link rel="stylesheet" href="/static/myadmin/css/list.css" />
+
+
+{% endblock %}

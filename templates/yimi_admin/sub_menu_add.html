@@ -1,0 +1,80 @@
+{% extends "yimi_admin/base.html" %}
+{% block right_div %}
+<div>
+    <input type="text" name="name" value="{{sub_menu.name}}" />
+    <select id="type-select">
+        <option>选择菜单事件类型</option>
+        <option value="click">关键字回复</option>
+        <option value="view">跳转链接</option>
+    </select>
+</div>
+{% if message %}
+<table>
+<tr>
+    <td>{{message.keyword}}<td>
+    <td>{% if message.retype == 'text' %}
+        {{message.get_resource.content}}
+        {% elif message.retype == 'news' %}
+            {% for article in message.get_resource.articles.all %}
+            <div>
+                <p>{{article.title}}</p>
+                <p><img src="{{article.get_image_url}}" width=100 height=100></p>
+            </div>
+            {% endfor %}
+        {% endif %}
+    </td>
+</tr>
+</table>
+{% endif %}
+
+
+<div id="click-event" style="display:none" >
+    <table border="1px">
+    {% for message in messages %}
+        <tr>
+            <td>{{message.keyword}}<td>
+            <td>{% if message.retype == 'text' %}
+                {{message.get_resource.content}}
+                {% elif message.retype == 'news' %}
+                    {% for article in message.get_resource.articles.all %}
+                    <div>
+                        <p>{{article.title}}</p>
+                        <p><img src="{{article.get_image_url}}" width=100 height=100></p>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </td>
+            <td><a href="{% url 'yimi_admin:menu_click' %}?messageid={{message.id}}&type=submenu&menuid={{sub_menu.id}}">选择</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+</div>
+
+<div id="view-event" {% if sub_menu.type != 'view' %} style="display:none" {% endif %} >
+    <form method="post" action="{% url 'yimi_admin:menu_url' %}">{% csrf_token %}
+        <input type="text" name="url" id="url-value" value="{{sub_menu.url}}" />
+        <input type="hidden" name="menuid" value="{{sub_menu.id}}" />
+        <input type="hidden" name="type" value="submenu" />
+        <input type="submit" name="提交" />
+    </form>
+</div>
+
+
+<script type="text/javascript">
+$("#type-select").change(
+    function(){
+        if($(this).val()=="click"){
+            $("#click-event").show();
+            $("#view-event").hide();
+            $("#subbutton-event").hide();
+        }else if($(this).val()=="view"){
+            $("#click-event").hide();
+            $("#view-event").show();
+            $("#subbutton-event").hide();
+        }
+    }
+)
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+.table .navbar-icons{height: auto;}
+.table .navbar-icons li a{margin:0 3px;}
+.error{color: red;}
+
+.sh_table{
+width:100%;
+margin-top:30px;
+}
+.sh_table td{
+border: 1px solid #ddd;
+height:30px;
+text-align:center;
+}
+
+.hidden{
+visibility:hidden;
+}
+
+.visible{
+visibility:visible;
+}

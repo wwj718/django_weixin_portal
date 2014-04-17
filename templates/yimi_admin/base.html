@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<title>亿米传媒 业务管理后台</title>
+<link href="/static/myadmin/css/main.css" rel="stylesheet" type="text/css" />
+<link href="/static/myadmin/css/mainstyle.css" rel="stylesheet" type="text/css" />
+
+
+ <!--<link href="/static/bootstrap/assets/css/bootstrap.css" rel="stylesheet" type="text/css" /> -->
+<link href="/static/myadmin/css/bootstrap-responsive.css" rel="stylesheet" type="text/css" />
+<!--[if IE 8]><link href="/static/watch/css/ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
+<!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'> -->
+
+<script src="http://libs.baidu.com/jquery/1.8.2/jquery.js"></script>
+<script src="http://libs.baidu.com/jqueryui/1.9.1/jquery-ui.min.js "></script>
+
+
+
+<script type="text/javascript" src="/static/watch/js/plugins/forms/jquery.form.wizard.js"></script>
+<script type="text/javascript" src="/static/watch/js/plugins/forms/jquery.form.js"></script>
+<script type="text/javascript" src="/static/watch/js/plugins/tables/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript" src="/static/myadmin/js/functions.js"></script>
+
+<script type="text/javascript" src="/static/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="/static/ueditor/ueditor.all.js"></script>
+<script type="text/javascript" src="/static/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+</head>
+
+<body >
+    <div id="top">
+        <div class="fixed">
+        <div class="container">
+            <a href="" title="" class="logo">亿米传媒 业务管理后台</a>
+            <ul class="top-menu">
+                <li class="dropdown">
+                    <a class="user-menu" data-toggle="dropdown"><span>{{request.user.username}} <b class="caret"></b></span></a>
+                    <a href="{% url 'yimi_admin:logout' %}" title=""id="sh_logout" class="user-menu" style="display:none;"><span>&nbsp;退出</span></a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    </div>
+
+    <!-- Content container -->
+    <div id="container" class="container row-fluid">
+
+        <!-- Sidebar -->
+        <div id="sidebar" class="span2">
+            <div class="sidebar-tabs">
+                <div id="general">
+                    <!-- Main navigation -->
+                    <ul class="navigation widget">
+                        <li><a href="#" title="" class="expand subOpened"><i class="icon-reorder"></i>{{appitem.name}}<strong></strong></a>
+                            <ul>
+                                <li><a href="{% url 'yimi_admin:news_list' %}">文章管理</a></li>
+                                <li><a href="{% url 'yimi_admin:news_add' %}">增加文章</a></li>
+                                <li><a href="{% url 'yimi_admin:category_list' %}">分类管理</a></li>
+                                <li><a href="{% url 'yimi_admin:articles_list' %}">文章分类管理</a></li>
+                            </ul>
+                        </li>
+                         <li><a href="#" title="" class="expand"><i class="icon-reorder"></i>自动回复<strong>2</strong></a>
+                            <ul>
+                                <li><a href="{% url 'yimi_admin:reply' %}?tag=subscribe">关注回复</a></li>
+                                <li><a href="{% url 'yimi_admin:reply' %}?tag=keyword_default_recontent">无匹配回复</a></li>
+                                <li><a href="{% url 'yimi_admin:keyword_reply' %}">关键字回复</a></li>
+                            </ul>
+                        </li>
+                         <li><a href="{% url 'yimi_admin:users_list' %}" title="" class="expand"><i class="icon-reorder"></i>用户管理<strong>1</strong></a>
+                            <ul>
+                                <li><a href="{% url 'yimi_admin:users_list' %}">用户管理</a></li>
+                                <li><a href="{% url 'yimi_admin:groups_list' %}">组管理</a></li>
+                            </ul>
+                        </li>                        
+                        <li><a href="#" title="" class="expand"><i class="icon-reorder"></i>自定义菜单<strong>2</strong></a>
+                            <ul>
+                                <li><a href="{% url 'yimi_admin:menus_list' %}">菜单管理</a></li>
+                                <li><a href="{% url 'yimi_admin:menu_add' %}">增加一级菜单</a></li>
+                            </ul>
+                        </li>                                                                       
+                        <li><a href="#" title="" class="expand"><i class="icon-reorder"></i>用户提交信息管理<strong>3</strong></a>
+                            <ul>
+                                <li><a href="{% url 'yimi_admin:activity_list' %}">活动管理</a></li>
+                                <li><a href="{% url 'yimi_admin:sim_account_list' %}">预约开户</a></li>
+                                <li><a href="{% url 'yimi_admin:open_account_list' %}">申请模拟账户</a></li>
+                                <li><a href="{% url 'yimi_admin:questions_list' %}">在线咨询</a></li>
+                            </ul>
+                        </li>                          
+                    </ul>
+                    <!-- /main navigation -->
+                </div>
+            </div>
+        </div>
+        <!-- /sidebar -->
+        <!-- Content -->
+        {% block right_div %}
+        {% endblock %}
+        <!-- /content -->
+    </div>
+
+</body>
+<script>
+$(".top-menu").hover(
+  function () {
+    $("#sh_logout").css('display','block');
+  },
+  function () {
+   $("#sh_logout").css('display','none');
+  }
+); 
+</script>
+</html>
+

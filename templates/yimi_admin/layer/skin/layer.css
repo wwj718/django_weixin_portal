@@ -1,0 +1,18 @@
+/** 
+ 
+ @Name: layer's style
+ @Date: 2012.09.15
+ @Author: 贤心
+ @blog： sentsin.com
+ 
+**/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,input,button,textarea,p,blockquote,th,td,form{margin:0; padding:0;}
+*html{background-image:url(about:blank);background-attachment:fixed;}
+/** common **/
+.xubox_shade, .xubox_layer{position:fixed; _position:absolute;}
+.xubox_shade{top:0; left:0; width:100%; height:100%; _height:expression(document.body.offsetHeight+"px");}
+.xubox_layer{top:150px; left:50%; height:auto; width:310px; margin-left:-155px;}
+.xubox_border, .xubox_title, .xubox_title i, .xubox_page, .xubox_iframe, .xubox_title em, .xubox_close, .xubox_msgico, .xubox_moves{position:absolute;}
+.xubox_border{display:none;}
+.xulayer_png32{background:url(default/close.jpg) no-repeat;}
+.xubox_moves{border:3px solid #333; cursor:move; opacity:0.7; filter:alpha(opacity=70);}
