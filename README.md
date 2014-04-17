@@ -1,4 +1,4 @@
-##django_weixin
+##django_weixin_portal
 一直打算自己写一个第三方微信管理平台,恰好看到这个项目，用的又是我所熟悉的django,于是决定以它为基础做进一步的开发。
 
 该项目最初是由 亿米CH 开源的`开源的第三方微信开发者账号管理平台`,开源协议为BSD
@@ -31,4 +31,7 @@
 2.客户账号登陆http://mp.weixin.qq.com/,填写url (token,app_item.id)，token验证得到appid, app_secrect, 填入app_item中
 
 ###运行项目
+
+*  `pip install -r requlirements.txt`
+*  后台帐号:admin . 密码：admin
 
