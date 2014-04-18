@@ -14,6 +14,12 @@ from utils import convert_get_data, get_entry_page
 from models import *
 from yimi_forms import *
 
+#edit by wwj
+from django.shortcuts import get_list_or_404
+from django.shortcuts import redirect
+
+#end wwj
+
 LOGIN_URL = '/yimi-admin/login/'
 
 def mylogout(request):
@@ -37,7 +43,14 @@ def mylogin(request):
         context_instance=RequestContext(request))
 def get_appitem(user):
     if user:
+        appitem = AppItem.objects.filter(user=user).first()
+        #必须先创建AppItem否则会报错
+        if not appitem:
+            #现在admin里开通帐号，才能让他们登录到管理界面。所以理论上不存在appitem不存在的问题
+            #如果没有appitem，应该重定向到创建appitem
+            return redirect('/admin')
         return AppItem.objects.filter(user=user).first()
+
 
 def page_turning(list_obj, request, count=10):
     '''翻页函数'''
@@ -51,8 +64,8 @@ def page_turning(list_obj, request, count=10):
 @login_required(login_url=LOGIN_URL)
 def news_list(request):
     appitem = get_appitem(request.user)
+    #修复一个AttributeError
     articles = appitem.articles.all()
-    
     matchs, show_pages = page_turning(articles, request, 10)
     context = {
         'articles': articles,
@@ -65,6 +78,7 @@ def news_list(request):
 @login_required(login_url=LOGIN_URL)
 def category_list(request):
     appitem = get_appitem(request.user)
+    #修复一个AttributeError
     categories = appitem.categories.all()
     yisi = False
     if appitem.categories.filter(status=False).exists():
@@ -95,6 +109,7 @@ def news_add(request):
     else:
         article = None
         out_categories = appitem.categories.all()
+        
         in_categories = None
     if request.method == 'POST':
         postdata = request.POST
@@ -155,8 +170,10 @@ def articles_list(request):
     if slug:
         category = appitem.categories.filter(id=slug).first()
         articles = category.articles.all()
+        
     else:
         articles = appitem.articles.all()
+
     matchs, show_pages = page_turning(articles, request, 10)
     context = {
         'articles': articles,
@@ -209,7 +226,11 @@ def reply(request):
     add = request.GET.get('add') #新增关键字符号
     news_show = None
     if tag in ['keyword_default_recontent', 'subscribe']:
-        message = appitem.messages.filter(tag=tag).first()
+        message = appitem.messages.filter(tag=tag).first()#bug：message可能为空,后面的message.tag报错        
+        #todo : 如果没有message，重定向到创建message，并携带error信息提示，重定向到创建相应message处，或者使用默认的。默认更好。用fixtures初始化
+        #todo :if not message:
+            #初始化
+            #appitem.messages.create
     elif mid:
         message = appitem.messages.filter(tag=tag, id=mid).first()
     elif not mid and tag == 'keyword_recontent' and add =='add':
@@ -231,11 +252,13 @@ def reply(request):
         if news.order_dic:
             order_dic = json.loads(news.order_dic)   
         news_articles = news.articles.all()
+        
     
     field_list = ['keyword', 'tag', 'listchoid', 'news_show', 'closeshow', 'mid', 'add']
     close_show_field = ['closeshow','listchoid']
     get_data_url = convert_get_data(request.GET, field_list)
-    articles = appitem.articles.all()
+
+    articles = appitem.articles.all()   
 
     page = int(request.GET.get("p",1))
     return_articles = get_entry_page(articles,10,page)
@@ -329,6 +352,7 @@ def users_list(request):
     if group_id:
         group = appitem.app_groups.get(id=group_id)
         app_users = group.app_users.all()
+            
     else:
         app_users = appitem.app_users.all()
     app_groups = appitem.app_groups.all()
