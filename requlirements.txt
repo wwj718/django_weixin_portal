@@ -1,3 +1,4 @@
 django>=1.6
 django-admin-bootstrapped
 south
+pillow
